@@ -174,12 +174,14 @@ sceneObject.prototype = {
                 for (i = 0; i < this.collideWith.length; i++) {
                     var obj = context[this.collideWith[i]];
                     var right = obj.x + obj.width;
-                    var left = obj.x;
+                    var left = obj.x; var top = obj.y;
+                   var bottom = obj.y + obj.height;
 
-                    if (this.x >= left && this.x <= right) {
+                    if (this.x + this.width <= left || this.x >= right) {
                         this.movementParam.dx = -1 * this.movementParam.dx;
                     }
-                    else {
+                    // if (this.y > top || this.x > right) { 
+                    if (this.y+this.height >= top ) {
                         this.movementParam.dy = -1 * this.movementParam.dy;
                     }
                 }
@@ -234,6 +236,7 @@ Scene.prototype = {
     },
     getObj: function(index) {
 
+        //this.objects[index].ctx.restore();
         return this.objects[index];
     },
     move: function(obj) {
@@ -244,7 +247,12 @@ Scene.prototype = {
         obj.previousY = obj.y;
         var collisionResult = this.getCollision(obj);
         obj.collision(collisionResult, this.objects);
+/*  if (obj.collideWith.length>0){
+            var collagent =this.objects[obj.collideWith];
+            if (Math.abs(collagent.x - obj.x)>
+        }*/
         obj.movement();
+
         obj.ctx.translate((obj.movementParam.dx * obj.movementParam.speedX), (obj.movementParam.dy * obj.movementParam.speedY));
 
         $('#info').html(JSON.stringify(obj.collideWith));
@@ -301,10 +309,10 @@ Interface = {
         this.onInit();
     },
     onInit: function() {
-        var o1 = new sceneObject(210, 100, 20, 20);
+        var o1 = new sceneObject(110, 300, 20, 20);
         //var o2 = new sceneObject(70, 10, 20, 20);
-        var o3 = new sceneObject(100, 100, 100, 20);
-        var o4 = new sceneObject(198, 210, 100, 20);
+        var o3 = new sceneObject(100, 200, 100, 20);
+        var o4 = new sceneObject(50, 250, 100, 20);
         o1.color = '10,100,40';
         // o2.color = '60,40,100';
         o3.color = '100,20,20';
@@ -314,7 +322,7 @@ Interface = {
         // this.scene.putObj(o2);
         this.scene.putObj(o3);
         this.scene.putObj(o4);
-        o1.movementParam.dy = 0;
+        o1.movementParam.dy = 1;
         // o2.movementParam.speedX = 2;
         this.scene.drawObject(o3);
         this.scene.drawObject(o4);
