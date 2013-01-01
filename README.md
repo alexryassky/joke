@@ -1,4 +1,3 @@
 joke
 ====
-
-Javascript 2D engine
+HTML5 + Javascript layered 2D engine
