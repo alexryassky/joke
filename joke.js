@@ -1,20 +1,20 @@
 /*jslint es5: true */
 
 var locations = ['ABOVE',
-                          'BELOW',
-                          'BEHIND',
-                          'BEYOND',
-                          'ORIGIN',
-                          'DESTINATION',
-                          'BETWEEN'];
+                              'BELOW',
+                              'BEHIND',
+                              'BEYOND',
+                              'ORIGIN',
+                              'DESTINATION',
+                              'BETWEEN'];
 
 var collisionType = ['BOTTOM_EDGE',
-                                     'TOP_EDGE',
-                                     'LEFT_EDGE',
-                                     'RIGHT_EDGE',
-                                     'ANOTHER_OBJECT',
-                                     'NO_COLLISION'
-                                    ];
+                                         'TOP_EDGE',
+                                         'LEFT_EDGE',
+                                         'RIGHT_EDGE',
+                                         'ANOTHER_OBJECT',
+                                         'NO_COLLISION'
+                                        ];
 
 
 var vectorPoint = function(x, y) {
@@ -174,14 +174,15 @@ sceneObject.prototype = {
                 for (i = 0; i < this.collideWith.length; i++) {
                     var obj = context[this.collideWith[i]];
                     var right = obj.x + obj.width;
-                    var left = obj.x; var top = obj.y;
-                   var bottom = obj.y + obj.height;
+                    var left = obj.x;
+                    var top = obj.y;
+                    var bottom = obj.y + obj.height;
 
-                    if (this.x + this.width <= left || this.x >= right) {
+                    if (Math.abs((this.x + this.width)-left) <= 1 || Math.abs(this.x - right) <= 1) {
                         this.movementParam.dx = -1 * this.movementParam.dx;
                     }
-                    // if (this.y > top || this.x > right) { 
-                    if (this.y+this.height >= top ) {
+                    // if (this.y > top || this.x > right) {
+                    if (Math.abs(this.y - bottom) <=1 || Math.abs((this.y + this.height) - top) <= 1) {
                         this.movementParam.dy = -1 * this.movementParam.dy;
                     }
                 }
@@ -310,20 +311,21 @@ Interface = {
     },
     onInit: function() {
         var o1 = new sceneObject(110, 300, 20, 20);
-        //var o2 = new sceneObject(70, 10, 20, 20);
-        var o3 = new sceneObject(100, 200, 100, 20);
-        var o4 = new sceneObject(50, 250, 100, 20);
+        var o2 = new sceneObject(320, 50, 20, 250);
+        var o3 = new sceneObject(140, 40, 100, 20);
+        var o4 = new sceneObject(120, 250, 100, 20);
         o1.color = '10,100,40';
-        // o2.color = '60,40,100';
+        o2.color = '60,40,100';
         o3.color = '100,20,20';
         o4.color = '100,20,20';
 
         this.scene.putObj(o1);
-        // this.scene.putObj(o2);
+        this.scene.putObj(o2);
         this.scene.putObj(o3);
         this.scene.putObj(o4);
         o1.movementParam.dy = 1;
-        // o2.movementParam.speedX = 2;
+        o3.movementParam.dy = 0;
+        this.scene.drawObject(o2);
         this.scene.drawObject(o3);
         this.scene.drawObject(o4);
         this.doStart();
@@ -334,12 +336,13 @@ Interface = {
         function() {
             //debugger;
             var obj = Interface.scene.getObj(0);
-            //var obj2 = Interface.scene.getObj(1);
-            Interface.scene.drawObject(obj);
+            var obj3 = Interface.scene.getObj(2);
+           
+             Interface.scene.drawObject(obj3);
+             Interface.scene.move(obj3);
+             Interface.scene.drawObject(obj);
             Interface.scene.move(obj);
 
-            // Interface.scene.drawObject(obj2);
-            // Interface.scene.move(obj2);
         }, 10);
     }
 };
@@ -357,4 +360,5 @@ document.getElementsByTagName('button')[0].addEventListener('click', function(ev
     console.log(root);
     Interface.init(root);
 
-});?
+});
+});
