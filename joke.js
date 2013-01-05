@@ -152,6 +152,7 @@ sceneObject.prototype = {
         this.xmov(this.movementParam).ymov(this.movementParam);
     },
     collision: function(collResult, context, callback) {
+        $('#info').append("Коллизия с "+ JSON.stringify(this.collideWith));
         if (collResult.indexOf('RIGHT_EDGE') != -1) {
             this.movementParam.dx = -1 * this.movementParam.dx;
         }
@@ -256,7 +257,7 @@ Scene.prototype = {
 
         obj.ctx.translate((obj.movementParam.dx * obj.movementParam.speedX), (obj.movementParam.dy * obj.movementParam.speedY));
 
-        $('#info').html(JSON.stringify(obj.collideWith));
+        
     },
     rotate: function(obj) {
 
@@ -324,6 +325,7 @@ Interface = {
         this.scene.putObj(o3);
         this.scene.putObj(o4);
         o1.movementParam.dy = 1;
+        o2.movementParam.dx = 0;
         o3.movementParam.dy = 0;
         this.scene.drawObject(o2);
         this.scene.drawObject(o3);
@@ -336,11 +338,14 @@ Interface = {
         function() {
             //debugger;
             var obj = Interface.scene.getObj(0);
+            var obj2 = Interface.scene.getObj(1);
             var obj3 = Interface.scene.getObj(2);
            
-             Interface.scene.drawObject(obj3);
-             Interface.scene.move(obj3);
-             Interface.scene.drawObject(obj);
+            Interface.scene.drawObject(obj3);
+            Interface.scene.move(obj3);
+            Interface.scene.drawObject(obj2);
+            Interface.scene.move(obj2);
+            Interface.scene.drawObject(obj);
             Interface.scene.move(obj);
 
         }, 10);
@@ -360,5 +365,4 @@ document.getElementsByTagName('button')[0].addEventListener('click', function(ev
     console.log(root);
     Interface.init(root);
 
-});
 });
