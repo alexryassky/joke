@@ -7,7 +7,8 @@ Features:
 * Moving 
 * Collisions between object and another objects, between edges of scene
 * Rotation 
-Principles:
+
+Principles of usage:
  * Subclass sceneObject 
  * Customize movement generating function (default is linear movement), if need it
  * Use for creating sprites and background
