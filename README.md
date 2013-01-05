@@ -1,7 +1,7 @@
 joke
 ====
 
-Simple Javascript 2D engine engine, that uses layered handling. 
+Simple Javascript 2D engine, that uses layered handling. 
 Features:
 * Support of many independent objects  simultaneously
 * Moving 
