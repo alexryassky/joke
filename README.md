@@ -1,4 +1,14 @@
 joke
 ====
 
-Javascript 2D engine
+Simple Javascript 2D engine engine, that uses layered handling. 
+Features:
+* Support of many independent objects  simultaneously
+* Moving 
+* Collisions between object and another objects, between edges of scene
+* Rotation 
+Principles:
+ * Subclass sceneObject 
+ * Customize movement generating function (default is linear movement), if need it
+ * Use for creating sprites and background
+ 
