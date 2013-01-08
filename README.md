@@ -5,8 +5,8 @@ Simple Javascript 2D engine, that uses layered handling.
 Features:
 * Support of many independent objects  simultaneously;
 * Moving objects.
-**  Released: straightforward, angular, circular.
-**  Planned: along bezier curve
+*  Released: straightforward, angular, circular.
+*  Planned: along bezier curve
 * Collisions between object and another objects, between edges of scene;
 * Rotation;
 * Planned : mouse/keyboard interacting, different velocities, build simple game 
