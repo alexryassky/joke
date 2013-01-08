@@ -6,7 +6,7 @@ Features:
 * Support of many independent objects  simultaneously;
 * Moving objects.
 *  Released: straightforward, angular, circular (around custom point).
-  Planned: along bezier curve, along parabola( "jump").
+  Planned: along bezier curve, along parabola( I know how! :-) ).
 * Collisions between object and another objects, between objects and edges of scene;
 * Rotation around center of object;
 
