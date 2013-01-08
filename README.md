@@ -7,7 +7,7 @@ Features:
 * Moving objects.
 *  Released: straightforward, angular, circular (around custom point).
   Planned: along bezier curve, along parabola( "jump").
-* Collisions between object and another objects, between edges of scene;
+* Collisions between object and another objects, between objects and edges of scene;
 * Rotation around center of object;
 
 Nearly planned : loading textures, mouse/keyboard interacting. 
