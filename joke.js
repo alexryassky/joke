@@ -8,6 +8,7 @@ function inherit(proto) {
   return object;
 }
 
+
 var collisionType = ['BOTTOM_EDGE',
   'TOP_EDGE',
   'LEFT_EDGE',
@@ -25,11 +26,19 @@ var Root = function (el) {
     },
   };
 };
+var Util = function () {};
+Util.prototype = {
+  deg2rad: function (deg) {
+    return -1 * deg * Math.PI / 180;
+  }
+
+};
 var sceneObject = function (x, y, w, h) {
   this.x = x;
   this.y = y;
   this.width = w;
   this.height = h;
+  this.spin = 0;
   this.movementParam = {
     dx: 1,
     dy: 1,
@@ -43,9 +52,8 @@ var sceneObject = function (x, y, w, h) {
   this.collideWith = [];
   this.transformArray = [1, 0, 0, 1, 0, 0];
 };
-//Defined  abstract  movement  functions and coordinates on rectangular grid
+  
 sceneObject.prototype = {
-
   get canvas() {
     return this._canvas;
   }, set canvas(value) {
@@ -95,7 +103,7 @@ sceneObject.prototype = {
 
   },
   collision: function (collResult, context, callback) {
-
+    $('#history').html($("<li>").append("Коллизия с " + JSON.stringify(collResult)));
     if (collResult.indexOf('RIGHT_EDGE') != -1) {
       this.movementParam.dx = -1 * this.movementParam.dx;
     }
@@ -113,7 +121,7 @@ sceneObject.prototype = {
         this.movementParam.dy = -1 * this.movementParam.dy;
       } else {
         var i = 0;
-        //$('#history').append($("<li>").append("Коллизия с "+ JSON.stringify(this.collideWith)));
+
         for (i = 0; i < this.collideWith.length; i++) {
           var obj = context[this.collideWith[i]];
           var right = obj.x + obj.width;
@@ -156,11 +164,22 @@ Scene.prototype = {
     })(index);
   },
   clearOld: function (obj) {
+    
+   
     obj.ctx.save();
 
+   //   obj.ctx.fillRect(-7, -7, obj.width + 14, obj.height + 14);
+  
     obj.ctx.translate(-(obj.movementParam.dx * obj.movementParam.speedX), -(obj.movementParam.dy * obj.movementParam.speedY));
+    if (obj.spin != 0){
+      obj.ctx.translate(obj.width/2,obj.height/2);
+      obj.ctx.rotate(obj.rotationAngle);
+      obj.ctx.translate(-obj.width/2,-obj.height/2);
+    }      
 
+    //obj.ctx.fillRect(-7, -7, obj.width + 14, obj.height + 14);
     obj.ctx.clearRect(-7, -7, obj.width + 14, obj.height + 14);
+
 
     obj.ctx.restore();
   },
@@ -204,11 +223,12 @@ Scene.prototype = {
 
   },
   rotate: function (obj, angle) {
+    
     obj.ctx.save();
-    obj.rotationAngle += angle;
-    obj.rotationAngle = obj.rotationAngle % 360
+    obj.spin = 1;
+    obj.rotationAngle = (angle%360)  * Math.PI / 180 ;
     obj.ctx.translate(obj.width / 2, obj.height / 2);
-    obj.ctx.rotate(angle * Math.PI / 180);
+    obj.ctx.rotate(obj.rotationAngle);
     obj.ctx.translate(-(obj.width / 2), -(obj.height / 2));
     this.drawObject(obj);
     obj.ctx.restore();
@@ -242,7 +262,7 @@ Scene.prototype = {
         obj.collideWith.push(i);
       }
     }
-    //TODO check collision wth another object
+
     return result;
   }
 };
@@ -250,7 +270,7 @@ Scene.prototype = {
 
 
 function angularMovingSceneObject(x, y, w, h, angle) {
-  this.movingAngle = angle;
+  this.movingAngle = new Util().deg2rad(angle);
   this.x = x;
   this.y = y;
   this.width = w;
@@ -278,7 +298,7 @@ angularMovingSceneObject.prototype.xmov = function (param) {
 };
 
 angularMovingSceneObject.prototype.ymov = function (param) {
-  this.y += param.dx * param.speedY * Math.sin(this.movingAngle).toPrecision(3);
+  this.y += param.dy * param.speedY * Math.sin(this.movingAngle).toPrecision(3);
 
   return this;
 };
@@ -291,7 +311,7 @@ function circularMovingSceneObject(x, y, w, h, r) {
   // TODO Call parent constructor 
   this.centerX = x;
   this.centerY = y;
-    this.x = x;
+  this.x = x;
   this.y = y;
   this.movingAngle = 0;
   this.width = w;
@@ -315,17 +335,29 @@ function circularMovingSceneObject(x, y, w, h, r) {
 circularMovingSceneObject.prototype = inherit(angularMovingSceneObject.prototype);
 
 circularMovingSceneObject.prototype.xmov = function (param) {
-  this.x = this.centerX +this.radius * Math.cos(this.movingAngle+=0.01%360).toPrecision(3);
+  this.x = this.centerX + this.radius * Math.cos(this.movingAngle += 0.01 % 6.19 * this.movementParam.dx ).toPrecision(3);
   return this;
 };
 
 circularMovingSceneObject.prototype.ymov = function (param) {
-  this.y = this.centerY + this.radius * Math.sin(this.movingAngle+=0.01%360).toPrecision(3);
+  this.y = this.centerY +  this.radius * Math.sin(this.movingAngle += 0.01 % 6.19*this.movementParam.dy).toPrecision(3);
   return this;
 };
 
-circularMovingSceneObject.prototype.collision = function (a, b, c) {
-
+circularMovingSceneObject.prototype.collision = function (collResult, context, callback) {
+ if (collResult.indexOf('ANOTHER_OBJECT') != -1) {
+      if (context) {
+        
+        var i = 0;
+        var obj = context[this.collideWith[0]];
+      //  obj.collideWith()
+        obj.collideWith[0] = this;
+        
+        this.movementParam.dx = -1*this.movementParam.dx;
+        this.movementParam.dy = -1*this.movementParam.dy;
+        this.movingAngle+=this.movementParam.dx*0.1;
+      }
+   }
 }
 
 Interface = {
@@ -337,26 +369,26 @@ Interface = {
   onInit: function () {
     var o1 = new sceneObject(160, 160, 20, 20);
     var o2 = new sceneObject(320, 50, 20, 150);
-    var o3 = new sceneObject(140, 40, 100, 20);
-    var o4 = new angularMovingSceneObject(150, 100, 20, 20, 0);
-    var o5 = new circularMovingSceneObject(200, 250, 20, 20, 50);
+    var o3 = new sceneObject(40, 80, 100, 20);
+    var o4 = new angularMovingSceneObject(150, 100, 20, 20, 15);
+    var o5 = new circularMovingSceneObject(200, 250, 20, 20, 105);
 
     o1.color = '10,100,40';
     o2.color = '250,40,40';
     o3.color = '30,30,250';
     o4.color = '60,50,180';
     o5.color = '180,50,30';
-    this.scene.putObj(o1);
+   this.scene.putObj(o1);
     this.scene.putObj(o2);
     this.scene.putObj(o3);
     this.scene.putObj(o4);
     this.scene.putObj(o5);
     o1.movementParam.dy = 1;
     o2.movementParam.dx = 0;
-    o3.movementParam.dy = 0;        
-    o4.movingAngle = 70;
-    
-    
+    o3.movementParam.dy = 0;
+
+
+
     this.doStart();
   },
   doStart: function () {
@@ -370,8 +402,9 @@ Interface = {
       var obj4 = Interface.scene.getObj(3);
       var obj5 = Interface.scene.getObj(4);
       Interface.scene.clearOld(obj3);
+      Interface.scene.rotate(obj3, g++ );
       Interface.scene.move(obj3);
-      Interface.scene.drawObject(obj3);
+     
       Interface.scene.clearOld(obj2);
       Interface.scene.move(obj2);
       Interface.scene.drawObject(obj2);
@@ -382,9 +415,11 @@ Interface = {
       Interface.scene.move(obj4);
       Interface.scene.drawObject(obj4);
       Interface.scene.clearOld(obj5);
+     // Interface.scene.rotate(obj5, g );
       Interface.scene.move(obj5);
       Interface.scene.drawObject(obj5);
-      //obj.ctx.restore();           
+      //obj.ctx.restore();           */
+
     }, 20);
   }
 };
