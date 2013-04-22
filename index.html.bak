@@ -1,0 +1,21 @@
+<!doctype html>
+<HTML> 
+<HEAD>
+   <TITLE>..</TITLE> 
+   <STYLE>   
+		#wrapper {
+			     background-color:#ACC;
+			 }    
+   </STYLE> 
+   <SCRIPT src='Jericho.js'></SCRIPT>
+</HEAD>
+<BODY>
+	<div id ="wrapper" style="width:560px; height:440px"> 			
+		
+	</div>
+	<button>
+		Test
+	</button> 
+<SPAN id="info"> </SPAN> 
+</BODY>
+</HTML> 

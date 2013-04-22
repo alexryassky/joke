@@ -1,0 +1,15 @@
+#wrapper {
+  background-color:#ACC;
+}
+#wrapper-history {
+  overflow-y:scroll;
+  height : 50px;
+  margin: 3px
+}
+.item {
+  margin-left:10px;
+  margin-top:4px;
+}
+.subitem {
+  margin-left:19px;
+}
