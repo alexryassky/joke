@@ -1,0 +1,203 @@
+<xml version="1.0" encoding="UTF-8" standalone="yes">
+	<map>
+		<!-- Ширина и высота карты -->
+		<width>2000</width>
+		<height>800</height>
+			<objects>
+				<object>
+					<!--Имя, может присутствовать, может отсутствовать-->
+					<name>Mario</name>
+					<type>user</type>		<!--Тип может быть user (только 1 на всю карту), или  mob (если моб), или default  (платформа или еще что-то)-->
+					<width>30</width>
+					<height>40</height>
+					<x>50</x>
+					<y>710</y>
+					<!-- Движение. Если отсутствует, то узел не определяется-->
+					<movement>
+					
+						<rule>'straight' </rule> 				<!-- straight - прямолинейное, angular - под углом, circular - по кругу -->
+						<dx>2</dx>								<!-- Смещение вдоль оси X за один шаг, если не равно 0.  -->
+						<dy>0</dy> 								<!-- Смещение вдоль оси Y за один шаг, если не равно 0 -->
+						<speedX>0</speedX> 				<!-- Скорость перемещения по X -->
+						<speedY>0</speedY> 				<!-- Скорость перемещения по Y -->
+						<radius></radius>						<!-- Присутствует, если rule=='circular' -->
+						<angle></angle>						<!-- Присутствует, если rule=='angular' -->
+						
+						<waypoints></waypoints>				<!-- Этот узел скорее понадобится мобу. Содержит массив координат, промежутки 
+																			между которыми объект должен пройти  в соответствии c параметрами движения dx,dy,speedX, speedY
+																			Здесь приведено в качестве примера. Если таких точек нет, то
+																			этот узел не указывать. См. пример в следующем узле object -->
+					</movement>
+					<sprite>										<!-- Может присутствовать, может отсутствовать. В зависимости от того, есть ли спрайт.-->
+						<spriteImage></spriteImage>		<!-- Относительный путь к файлу спрайтов, например  'resources/sprites.png' -->
+					</sprite>
+				</object>
+				
+				
+				<object>
+				
+					<name>Evil_enemy_1</name>
+					<type>mob</type>
+					<width>40</width>
+					<height>50</height>
+					<x>50</x>
+					<y>650</y>
+					<movement>
+					
+						<dx>1</dx>
+						<!-- Здесь мы задаем мобу ходить взад-вперед по отрезку длиной 150px-->
+						<waypoints>[50,650],[200,650]</waypoints>
+						
+					</movement>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+						
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>Evil_flying_enemy_1</name>
+					<type>mob</type>
+					<width>100</width>
+					<height>100</height>
+					<x>100</x>
+					<y>500</y>
+					<movement>
+					
+						<dx>1</dx>
+						<dy>1</dy>
+						<!--летает вверх-право, вниз-право, вверх-лево, вниз-лево-->
+						<waypoints>[100,500],[200,400],[300,500],[200,400]</waypoints>
+						
+					</movement>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+						
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>Platform1</name>
+					<type>default</type>
+					<width>250</width>
+					<height>50</height>
+					<x>0</x>
+					<y>750</y>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>wall1</name> <!--стена-->
+					<type>default</type>
+					<width>100</width>
+					<height>250</height>
+					<x>250</x>
+					<y>550</y>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>
+			
+				<object>
+				
+					<name>stairs1</name> <!--лестница-->
+					<type>default</type>
+					<width>50</width>
+					<height>100</height>
+					<x>200</x>
+					<y>650</y>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>Platform2</name>
+					<type>default</type>
+					<width>200</width>
+					<height>50</height>
+					<x>0</x>
+					<y>650</y>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>stairs2</name> <!--лестница-->
+					<type>default</type>
+					<width>50</width>
+					<height>100</height>
+					<x>0</x>
+					<y>550</y>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>Platform3</name>
+					<type>default</type>
+					<width>200</width>
+					<height>50</height>
+					<x>50</x>
+					<y>550</y>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>
+				
+				<object>
+				
+					<name>pit1</name><!--яма-->
+					<type>default</type>
+					<width>300</width>
+					<height>50</height>
+					<x>350</x>
+					<y>750</y>
+					<sprite>
+					
+						<spriteImage>'resources/block2.png'</spriteImage> <!--понадобится другая картинка-->
+					</sprite>
+				</object>
+				
+				
+				<object>
+				
+					<name>moving_platform1</name><!--движущаяся платформа-->
+					<type>default</type>
+					<width>50</width>
+					<height>10</height>
+					<x>350</x>
+					<y>730</y>
+					<movement>
+					
+						<dx>1</dx>
+					
+						<waypoints>[350,730],[600,730]</waypoints>
+						
+					</movement>
+					<sprite>
+					
+						<spriteImage>'resources/block1.png'</spriteImage>
+					</sprite>
+				</object>				
+				
+		</objects>
+	</map>
