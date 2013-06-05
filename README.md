@@ -9,8 +9,10 @@ Features:
   Planned: along bezier curve, along parabola( I know how! :-) ).
 * Collisions between object and another objects, between objects and edges of scene;
 * Rotation around center of object;
+* Keyboard interacting
+* Sprites animation
 
-Nearly planned : loading textures, mouse/keyboard interacting. 
+Nearly planned : tiles, mouse  interacting. 
 Farly planned : different velocities of objects, adding special background layer, and build simple game
 
 Principles of usage:
