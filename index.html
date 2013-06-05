@@ -1,53 +1,35 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	<script src="images.js"></script>
-	<script src="classes.js"></script>
-	<script src="joke.js"></script>
-	<link rel="stylesheet" type="text/css" href="main.css" />
-	<script> 
-		var root;
-		document.addEventListener("DOMContentLoaded", function (event) {
-		var container = document.getElementById('wrapper');
-		document.getElementsByTagName('button')[0].addEventListener('click', function (event) {
-		var container = document.getElementById('wrapper');
-		root = new Root(container);
-		Interface.init(root);
-		document.addEventListener('keydown',
-			function (event){
-				var key  = event.which;
-				switch (key){
-					case 37:
-						key  = 'KEY_LEFT';
-						break;
-					case 38:
-						key  = 'KEY_UP';
-						break;
-					case 39:
-						key  = 'KEY_RIGHT';
-						break;
-					case 40:
-						key  = 'KEY_DOWN';
-						break;
-					default:
-						console.log('Unknown key: '+key);
-				}
-				console.log('key: '+key);
-			}
-		);
-		});
-	});
-	
-	</script>
-	
-	</head>
-	<body>
-		<p>Rectangular madness</p>
-		<div id="wrapper" style="width:550px; height:340px"></div>
-		<button>Go demo</button>
-		<span id="info"> </span>
-		<div id="wrapper-history">
-		  <ul id="history"></ul>
-		</div>
-	</body>
+    <head>
+        <script src="Utils.js" ></script>
+        <script src="classes.js"></script>
+        <script src="joke.js"></script>
+        <script src="images.js"></script>	
+        <script src="threads.js"></script>		
+        <script src="user.js"></script>           
+        <script src="Geometry.js"></script>  
+        <!-- <script src="third-party/sylvester/sylvester.js"></script> -->
+        <link rel="stylesheet" type="text/css" href="main.css"/>
+        <script>
+            var root;
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var container = document.getElementById('wrapper');
+                document.getElementsByTagName('button')[0].addEventListener('click', function(event) {
+                    var container = document.getElementById('wrapper');
+                    root = new Root(container);
+                    Interface.init(root);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <p>Mario madness</p>
+        <div id="wrapper" style="width:550px; height:340px"></div>
+        <button>Go demo</button>
+        <span id="info"> </span>
+        <div id="wrapper-history">
+            <ul id="history"></ul>
+        </div>
+
+    </body>
 </html>

@@ -57,8 +57,6 @@ Sprite.prototype.setSprite = function(imageIndex, row, col){
 	}
 	this.row  = row;
 	this.col = col;
-	// Предполагается, что данный метод будет примешан к одному из классов sceneObject, у которого есть св-во context
-	// Следовательно, габариты спрайта равны габаритам объекта
 	if (this.width && this.height){
 		this.srcWidth = this.width;
 		this.srcHeight = this.height;
@@ -67,12 +65,10 @@ Sprite.prototype.setSprite = function(imageIndex, row, col){
 		console.log("Properties width and/or height are not assigned. ");
 	}
 	this.srcY = this.srcHeight * row;
-	this.srcX = this.srcWidth * col + this.colOffset;
+	this.srcX = (this.srcWidth + 2)* col;
 };
 
 Sprite.prototype.drawSprite = function (){
-	// Предполагается, что данный метод будет примешан к одному из классов sceneObject, у которого есть св-во context
-	
 	if (this.rasterOperation) {
 	if (!this.context) {
 		this.context = this._canvas.getContext('2d');
@@ -91,9 +87,7 @@ Sprite.prototype.drawSprite = function (){
 										0,
 										this.width,
 										this.height
-										);
-		//debugger;
-		
+										);				
 	}
 	catch (e){
 		console.error('error occured : ' +e);
